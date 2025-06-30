@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combinar PDFs</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Estilo personalizado para el footer */
+        footer {
+            background-color: #f8f9fa;
+            padding: 15px 0;
+            margin-top: 10px;
+            text-align: center;
+            border-top: 1px solid #e9ecef;
+        }
+
+        footer a {
+            color: #0d6efd;
+            /* Color azul de Bootstrap */
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Combinar PDFs</h1>
+        <form method="post" enctype="multipart/form-data" class="card p-4 shadow">
+            <div class="mb-3">
+                <label for="pdf_files" class="form-label">Selecciona archivos PDF para juntar:</label>
+                <input type="file" class="form-control" name="pdf_files" id="pdf_files" multiple accept=".pdf" required>
+            </div>
+            <div class="mb-3">
+                <label for="output_name" class="form-label">Escribe un nombre para el archivo resultante (sin
+                    .pdf):</label>
+                <input type="text" class="form-control" name="output_name" id="output_name" placeholder="merged"
+                    value="merged">
+            </div>
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Combinar PDFs</button>
+                <button type="button" class="btn btn-danger" onclick="limpiarSeleccion()">Limpiar PDFs
+                    seleccionados</button>
+            </div>
+            <footer>
+                <p>Creado por: <strong>Jenrry Soto Dextre</strong></p>
+                <p><a href="https://dextre.xyz" name="Pagina Web: " target="_blank">https://dextre.xyz</a></p>
+            </footer>
+        </form>
+
+        {% if request.args.get('filename') %}
+        <div class="alert alert-success mt-3">
+            ¡PDF combinado con éxito! <a href="{{ url_for('download', filename=request.args.get('filename')) }}"
+                class="alert-link">Descargar</a>
+        </div>
+        {% endif %}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function limpiarSeleccion() {
+            // Limpia el input de archivos
+            document.getElementById('pdf_files').value = '';
+            document.getElementById('output_name').value = '';
+            // Opcional: Muestra un mensaje
+            alert('Se ha limpiado la selección de PDFs.');
+        }
+    </script>
+</body>
+
+</html>
